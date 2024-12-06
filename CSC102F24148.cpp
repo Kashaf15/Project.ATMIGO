@@ -5,7 +5,7 @@
 using namespace std;
 
 //Validations
-bool validInput(bool isValid, string inputStr,int &input);
+bool validInput(bool isValid, string &inputStr,int &input);
 bool validPin(bool isValid,string &pin);
 bool validFloat(string &input);
 
@@ -170,69 +170,77 @@ int main()
         }
         else if (loggedInUserType == 2)
         {
+            bool flag=false;
            for (int index = 0; index < asize; index++)
             {
                 if (username == accountee[index] && pin == pins[index]) 
                 {
+                    
                     do
-                    {   
-                    switch (showAccounteeMenu(input))
-                    {
-
-                        case 1:
+                    {  
+                        switch (showAccounteeMenu(input))
                         {
-                            cashDeposit(index,deposits,totalAmount);
-                            break;
+                            case 1:
+                            {
+                                cashDeposit(index,deposits,totalAmount);
+                                break;
+                            }
+                            case 2:
+                            {
+                                cashWithdraw(index,withdraws,totalAmount);
+                                break;
+                            }
+                            case 3:
+                            {
+                                cashWithdrawalMultiCurrency(index, withdraws, totalAmount);
+                                break;
+                            }
+                            case 4:
+                            {
+                                cashDepositMultiCurrency(index,deposits,totalAmount);
+                                break;
+                            }
+                            case 5:
+                            {
+                                fundsTransfer(index,asize,transferFunds, totalAmount, accountee);
+                                break;
+                            }
+                            case 6:
+                            {
+                                accountBalanceCheck(index, totalAmount);
+                                break;
+                            }
+                            case 7:
+                            {
+                                accounteeTransactionHistory(index, transferFunds,withdraws,deposits);
+                                break;
+                            }
+                            case 8:
+                            {
+                                threatAlert(index,securityThreats);
+                                break;
+                            }
+                            case 9:
+                            {
+                                feedback(index, allianceResponse, complaints);
+                                break;
+                            }
+                            case 0:
+                            {
+                                cout<<"You are logged out!"<<endl;
+                                flag=true;
+                                break;
+                            }
+                            default:
+                                cout << "Invalid choice!!!"<<endl;
+                                break;
                         }
-                        case 2:
-                        {
-                            cashWithdraw(index,withdraws,totalAmount);
-                            break;
-                        }
-                        case 3:
-                        {
-                            cashWithdrawalMultiCurrency(index, withdraws, totalAmount);
-                            break;
-                        }
-                        case 4:
-                        {
-                            cashDepositMultiCurrency(index,deposits,totalAmount);
-                            break;
-                        }
-                        case 5:
-                        {
-                            fundsTransfer(index,asize,transferFunds, totalAmount, accountee);
-                            break;
-                        }
-                        case 6:
-                        {
-                            accountBalanceCheck(index, totalAmount);
-                            break;
-                        }
-                        case 7:
-                        {
-                            accounteeTransactionHistory(index, transferFunds,withdraws,deposits);
-                            break;
-                        }
-                        case 8:
-                        {
-                            threatAlert(index,securityThreats);
-                            break;
-                        }
-                        case 9:
-                        {
-                            feedback(index, allianceResponse, complaints);
-                            break;
-                        }
-                        case 0:
-                            cout <<endl<< "          You are logged out!!         " << endl;
-                            break;
-                        default:
-                        cout << "Invalid choice!!!"<<endl;
-                        break;
-                    }
+                        
                     } while (input != 0);
-
+                }
+                if (flag==true)
+                {
+                    break;
                 }
             }
             input = -1; // this statment is to make sure that do not exit from outer loop
@@ -246,7 +254,7 @@ int main()
     return 0;
 }
 // Function Implementations
-bool validInput(bool isValid, string inputStr,int &input) {
+bool validInput(bool isValid, string &inputStr,int &input) {
     // Validate that the input is numeric
     isValid = true;
 
@@ -260,8 +268,8 @@ bool validInput(bool isValid, string inputStr,int &input) {
     if (!isValid) {
         cout << "Invalid input! Please enter a valid number." << endl;
     } else {
+        input=0;
         // Convert the valid string to an integer
-        input = 0;
         for (int i = 0; i < inputStr.length(); i++) {
             input = input * 10 + (inputStr[i] - '0');
         }
@@ -299,7 +307,8 @@ bool validPin(bool isValid,string &pin)
     return isValid;
 }
 void displayAtmigo() {
-    system("Color 06");
+    system("cls");
+    system("Color 07");
     cout << " __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __ __  " << endl;
     cout << "|                                                                 |" << endl;
     cout << "|     ___      ____    __  __      _____      ____     ______     |" << endl;
@@ -885,8 +894,6 @@ void cashDepositMultiCurrency(int index, float deposits[], float totalAmount[])
 
     if (choice == 1)
     {
-        cout << "Enter the amount you want to Deposit (Maximum: $5000 && Minimum: $500): $ ";
-        cin >> deposits[index];
 
         string input;
         bool isValidFloat=false;
@@ -922,8 +929,7 @@ void cashDepositMultiCurrency(int index, float deposits[], float totalAmount[])
     }
     else if (choice == 2)
     {
-        cout << "Enter the amount you want to Deposit (Maximum: SAR 10000 && Minimum: SAR 1000): SAR ";
-        cin >> deposits[index];
+
 
         string input;
         bool isValidFloat=false;
