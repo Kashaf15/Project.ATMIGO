@@ -1304,14 +1304,14 @@ void loadData(AccountArrays a[], const int asize) {
     // Write each account's data to the file
     for (int i = 0; i < asize; i++) {
         if (!a[i].accountee.empty()) { // Skip empty records
-            fout << a[i].accountee << "\t"
-                 << a[i].pins << "\t"
-                 << a[i].complaints << "\t"
-                 << a[i].allianceResponse << "\t"
-                 << a[i].securityThreats<< "\t"
-                 << a[i].deposits << "\t"
-                 << a[i].totalAmount << "\t"
-                 << a[i].withdraws << "\t"
+            fout << a[i].accountee << "\t\t"
+                 << a[i].pins << "\t\t"
+                 << a[i].complaints << "\t\t"
+                 << a[i].allianceResponse << "\t\t"
+                 << a[i].securityThreats<< "\t\t"
+                 << a[i].deposits << "\t\t"
+                 << a[i].totalAmount << "\t\t"
+                 << a[i].withdraws << "\t\t"
                  << a[i].transferFunds << endl;
         }
     }
